@@ -1,0 +1,85 @@
+SOLUTION 1 :
+
+
+print('Welcome to the country dictionary.We know the codes of:')
+
+d={'Andorra':'AD','United Arab Erimates':'AE','Afghanistan':'AF','Antigua and Babuda':'AG','Anguilla':'AI','Albania':'AL','Armania':'AM','Angola':'AO','Antarctica':'AQ','Argentina':'AR'};
+for country in d.keys():
+  print(country);
+  
+x=input('Whose code do you want to look up?');
+print('country code of ',x,'is',d[x]);
+
+
+SOLUTION 2:
+
+name=input("Enter name to be searched:");
+with open("example.txt","r") as f:
+    contents=f.read();
+    words=contents.split();
+    print(words);
+    count=0;
+    for x in words:
+        if ((name==x) or (x==name+'?') or (x==name+',')):
+            count=count+1;
+        with open("name_count.txt","w") as gname:
+            gname.write("Output file should look something like:\n NAME\t COUNT\n {}\t {}".format(name,count));
+
+
+SOLUTION 3:
+
+import urllib.request
+website = "https://www.nasdaqtrader.com/Trader.aspx?id=ShortIntPubSch"
+r = urllib.request.urlopen(website)
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(r,"lxml")
+table = soup.find_all("table")[0]
+rows = table.find_all('tr')    
+headers = table.find_all('th')[1].text
+print(headers)
+for row in rows[1:]:
+    settlement_date = row.find_all('td')[1].text
+    print(settlement_date)
+
+
+
+
+--------With Date Format
+
+
+import urllib.request
+from datetime import datetime
+website = "https://www.nasdaqtrader.com/Trader.aspx?id=ShortIntPubSch"
+r = urllib.request.urlopen(website)
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(r,"lxml")
+table = soup.find_all("table")[0]
+rows = table.find_all('tr')    
+headers = table.find_all('th')[1].text
+print(headers)
+for row in rows[1:]:
+    settlement_date = row.find_all('td')[1].text
+    objDate = datetime.strptime(settlement_date,'%m/%d/%Y').strftime("%m-%d-%Y")
+    #obj_Date = datetime.strftime(objDate, "%m-%d-%Y")
+    print(objDate)
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+        
